@@ -27,9 +27,7 @@ Z_median = 10 ** raw[:, 1] * unyt.dimensionless * Z_solar_obs / solar_metallicit
 Z_std_lo = 10 ** raw[:, 2] * unyt.dimensionless * Z_solar_obs / solar_metallicity
 Z_std_hi = 10 ** raw[:, 3] * unyt.dimensionless * Z_solar_obs / solar_metallicity
 
-y_scatter = (
-    unyt.unyt_array((Z_median - Z_std_lo, Z_std_hi - Z_median))
-)
+y_scatter = unyt.unyt_array((Z_median - Z_std_lo, Z_std_hi - Z_median))
 
 
 # Meta-data
