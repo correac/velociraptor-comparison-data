@@ -46,8 +46,8 @@ comment = (
     "The R-calibration of Pilyugin & Grebel (2016) was employed to determine oxygen abundances. "
     "The metallicity is expressed as 12 + log10(O/H). In these units the solar metallicity is 8.69."
 )
-citation = "Fraser-McKelvie et al. (2021)"
-bibcode = " 2021MNRAS.tmp.3132F"
+citation = "Fraser-McKelvie et al. (2022, SAMI)"
+bibcode = "2022MNRAS.510..320F"
 name = "Stellar mass - gas phase metallicity relation "
 plot_as = "points"
 redshift = 0.1

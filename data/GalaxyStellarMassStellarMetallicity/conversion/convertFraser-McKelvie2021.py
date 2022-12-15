@@ -61,8 +61,8 @@ comment = (
     "average ages and metallicities of the SAMI galaxies from "
     "the 1Re aperture spectra. "
 )
-citation = "Fraser-McKelvie et al. (2021)"
-bibcode = " 2021MNRAS.tmp.3132F"
+citation = "Fraser-McKelvie et al. (2022, SAMI)"
+bibcode = "2022MNRAS.510..320F"
 name = "Stellar mass - stellar metallicity relation "
 plot_as = "points"
 redshift = 0.1
