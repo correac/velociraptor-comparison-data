@@ -51,7 +51,10 @@ processed.associate_x(
     M_star, scatter=None, comoving=True, description="Galaxy Stellar Mass"
 )
 processed.associate_y(
-    logNO_median, scatter=y_scatter, comoving=True, description="Gas-phase nitrogen over oxygen"
+    logNO_median,
+    scatter=y_scatter,
+    comoving=True,
+    description="Gas-phase nitrogen over oxygen",
 )
 processed.associate_citation(citation, bibcode)
 processed.associate_name(name)
@@ -89,7 +92,10 @@ processed.associate_x(
     logOH_median, scatter=None, comoving=True, description="Gas-phase metallicity"
 )
 processed.associate_y(
-    logNO_median, scatter=y_scatter, comoving=True, description="Gas-phase nitrogen over oxygen"
+    logNO_median,
+    scatter=y_scatter,
+    comoving=True,
+    description="Gas-phase nitrogen over oxygen",
 )
 processed.associate_citation(citation, bibcode)
 processed.associate_name(name)

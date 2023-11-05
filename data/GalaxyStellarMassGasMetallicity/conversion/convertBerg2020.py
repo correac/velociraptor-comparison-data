@@ -18,7 +18,7 @@ if not os.path.exists(output_directory):
     os.mkdir(output_directory)
 
 # Read the data
-raw = np.loadtxt(input_filename, usecols=(1,2,3,4),delimiter=',')
+raw = np.loadtxt(input_filename, usecols=(1, 2, 3, 4), delimiter=",")
 logOH_mean = raw[:, 0] * unyt.dimensionless  # log(O/H)+12
 logOH_std = raw[:, 1] * unyt.dimensionless  # log(O/H)+12
 logNO_mean = raw[:, 2] * unyt.dimensionless  # log(N/O)
@@ -43,10 +43,16 @@ redshift = 0.1
 # Write everything
 processed = ObservationalData()
 processed.associate_x(
-    logOH_mean, scatter=x_scatter, comoving=True, description="Gas-phase oxygen over hydrogen"
+    logOH_mean,
+    scatter=x_scatter,
+    comoving=True,
+    description="Gas-phase oxygen over hydrogen",
 )
 processed.associate_y(
-    logNO_mean, scatter=y_scatter, comoving=True, description="Gas-phase nitrogen over oxygen"
+    logNO_mean,
+    scatter=y_scatter,
+    comoving=True,
+    description="Gas-phase nitrogen over oxygen",
 )
 processed.associate_citation(citation, bibcode)
 processed.associate_name(name)
