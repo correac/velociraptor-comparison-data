@@ -1,4 +1,7 @@
-from velociraptor.observations.objects import ObservationalData
+from velociraptor.observations.objects import (
+    MultiRedshiftObservationalData,
+    ObservationalData,
+)
 
 import unyt
 import numpy as np
@@ -18,7 +21,7 @@ twelve_plus_log_OH_solar = 8.69
 
 input_filename = "../raw/konstantopoulou23_*.txt"
 
-output_filename = "Konstantopoulou23_{}.hdf5"
+output_filename = "Konstantopoulou2023.hdf5"
 output_directory = "../"
 
 if not os.path.exists(output_directory):
@@ -26,18 +29,6 @@ if not os.path.exists(output_directory):
 
 data = {}
 exgals = ["grbs", "dlas"]
-
-
-def stringify_z(z):
-    """
-    Eagle-style text formatting of redshift label.
-    Example: z=1.5 will be printed as z001p500.
-
-    z: The redshift to produce a label for
-    """
-    whole = int(z)
-    frac = int(1000 * (z - whole))
-    return f"z{whole:03d}p{frac:03d}"
 
 
 def read_tex_tables():
@@ -49,11 +40,8 @@ def read_tex_tables():
         fields = ["Z", "Z_sigma", "DTG", "DTG_sigma", "z"]
         idxs = [-2, -5]
         dset = [[]] * len(fields)
-        haszs = False
-        if abstype in exgals:
-            # fields.append('z')
-            # dset.append([])
-            haszs = True
+        haszs = True if abstype in exgals else False
+
         with open(fname) as f:
             lines = f.readlines()
             for line in lines:
@@ -82,8 +70,8 @@ def read_tex_tables():
     return data
 
 
-def process_for_redshift(zs, data):
-    processed = ObservationalData()
+def process(zs, data):
+    multi_z = MultiRedshiftObservationalData()
 
     comment = (
         "Konstantopoulou et al. (2023). Obtained using VLT, X-shooter & HST for a combination of"
@@ -91,25 +79,34 @@ def process_for_redshift(zs, data):
     )
     citation = "Konstantopoulou et al. (2023)"
     bibcode = "10.48550/arXiv.2310.07709"
-    name = "Dust-to-gas ratio as a function of metallicity (represented as O abundance)"
+    name = "Dust-to-gas ratio as a function of metallicity (represented as Oxygen abundance)"
     plot_as = "points"
     h = cosmology.h
 
+    multi_z.associate_citation(citation, bibcode)
+    multi_z.associate_name(name)
+    multi_z.associate_comment(comment)
+    multi_z.associate_cosmology(cosmology)
+
     for i in range(len(zs) - 1):
+        processed = ObservationalData()
+
+        zcen = (zs[i + 1] + zs[i]) / 2
+        redshift = zcen
+
         combination = []
         for src in data.keys():
             bdx = np.logical_and(
                 data[src][:, -1] >= zs[i], data[src][:, -1] < zs[i + 1]
             )
-
-            zcen = (zs[i + 1] + zs[i]) / 2
-            redshift = zcen
             combination.append(data[src][bdx, :])
+
         combdat = np.vstack(combination)
         combdat = combdat[~np.isnan(combdat).any(axis=-1)]
+
         OH = (combdat[:, 0] + twelve_plus_log_OH_solar) * unyt.dimensionless
         OH_err = np.row_stack([combdat[:, 1]] * 2) * unyt.dimensionless
-        # np.row_stack([combdat[:,1],-combdat[:,1]])+OH
+
         DTG = combdat[:, 2] * unyt.dimensionless
         DTG_err = np.row_stack([combdat[:, 3]] * 2) * unyt.dimensionless
 
@@ -119,21 +116,19 @@ def process_for_redshift(zs, data):
         processed.associate_y(
             DTG, scatter=DTG_err, comoving=True, description="Phi (GDMF)"
         )
-        processed.associate_citation(citation, bibcode)
-        processed.associate_name(name)
-        processed.associate_comment(comment)
-        processed.associate_redshift(redshift)
+
+        processed.associate_redshift(redshift, zs[i], zs[i + 1])
         processed.associate_plot_as(plot_as)
-        processed.associate_cosmology(cosmology)
+        multi_z.associate_dataset(processed)
 
-        output_path = f"{output_directory}/{output_filename.format(stringify_z(zcen))}"
+    output_path = f"{output_directory}/{output_filename}"
 
-        if os.path.exists(output_path):
-            os.remove(output_path)
+    if os.path.exists(output_path):
+        os.remove(output_path)
 
-        processed.write(filename=output_path)
+    multi_z.write(filename=output_path)
 
 
 z_bins = [0, 0.5, 1, 2, 3, 7]
 data = read_tex_tables()
-process_for_redshift(z_bins, data)
+process(z_bins, data)
