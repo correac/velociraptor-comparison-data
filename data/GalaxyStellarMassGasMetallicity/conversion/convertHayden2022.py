@@ -108,4 +108,7 @@ processed.associate_cosmology(cosmology)
 
 output_path = f"{output_directory}/{output_filename}"
 
+if os.path.exists(output_path):
+    os.remove(output_path)
+
 processed.write(filename=output_path)
