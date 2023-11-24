@@ -86,6 +86,8 @@ logNO_hi = raw[:, 3] * unyt.dimensionless  # log(N/O)
 # Define the scatter as offset from the mean value
 y_scatter = unyt.unyt_array((logNO_median - logNO_lo, logNO_hi - logNO_median))
 
+name = "Gas-phase metallicity - Gas phase N/O relation"
+
 # Write everything
 processed = ObservationalData()
 processed.associate_x(
