@@ -19,7 +19,7 @@ output_directory = "../"
 if not os.path.exists(output_directory):
     os.mkdir(output_directory)
 
-element_list = np.array(["C", "MG", "O", "N", "OH", "OHMGFE"])
+element_list = np.array(["C", "MG", "O", "N", "OH", "OHMGFE", "NO", "NOOH"])
 
 # compute COLIBRE assumed abundances ( Asplund et al. 2009 )
 Fe_over_H = 7.5
@@ -33,6 +33,7 @@ O_over_Fe_AS09 = O_over_H - Fe_over_H
 C_over_Fe_AS09 = C_over_H - Fe_over_H
 N_over_Fe_AS09 = N_over_H - Fe_over_H
 O_over_H_AS09 = O_over_H
+N_over_O_AS09 = N_over_H - O_over_H
 
 # tabulate/compute the same ratios from Grevesse, Asplund & Sauval (2007)
 Fe_over_H_GA07 = 7.45
@@ -45,6 +46,7 @@ Mg_over_Fe_GA07 = Mg_over_H_GA07 - Fe_over_H_GA07
 O_over_Fe_GA07 = O_over_H_GA07 - Fe_over_H_GA07
 C_over_Fe_GA07 = C_over_H_GA07 - Fe_over_H_GA07
 N_over_Fe_GA07 = N_over_H_GA07 - Fe_over_H_GA07
+N_over_O_GA07 = N_over_H_GA07 - O_over_H_GA07
 
 for element in element_list:
 
@@ -60,10 +62,27 @@ for element in element_list:
             y = MG_FE + Mg_over_Fe_GA07 - Mg_over_Fe_AS09
             name = "[Mg/Fe] as a function of [O/H]".format(element)
             ylabel = "[Mg/Fe]"
+        elif element == "NOOH":
+            N_Fe = apogee_dataset["N_FE"][:]
+            O_Fe = apogee_dataset["O_FE"][:]
+            y = N_Fe - O_Fe + N_over_O_GA07 - N_over_O_AS09
+            name = "[N/O] as a function of [O/H]".format(element)
+            ylabel = "[N/O]"
         else:  # OFe
             y = O_FE + O_over_Fe_GA07 - O_over_Fe_AS09
             name = "[O/Fe] as a function of [O/H]".format(element)
             ylabel = "[O/Fe]"
+
+    elif element == "NO":
+        name = "[N/O] as a function of [Fe/H]".format(element)
+        x = FE_H + Fe_over_H_GA07 - Fe_over_H
+        xlabel = "[Fe/H]"
+
+        N_Fe = apogee_dataset["N_FE"][:]
+        O_Fe = apogee_dataset["O_FE"][:]
+        y = N_Fe - O_Fe + N_over_O_GA07 - N_over_O_AS09
+        ylabel = "[N/O]".format(element)
+
     else:  # O, MG, N, or C
         x = FE_H + Fe_over_H_GA07 - Fe_over_H
         xlabel = "[Fe/H]"

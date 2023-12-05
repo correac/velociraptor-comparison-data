@@ -23,7 +23,7 @@ if not os.path.exists(output_directory):
 
 # Read the data
 raw = np.loadtxt(input_filename)
-M_star = 10 ** raw[:, 0] * unyt.Solar_Mass * (h_sim / h_obs) ** -2
+M_star = 10 ** raw[:, 0] * unyt.Solar_Mass * (h_sim / h_obs) ** (-2) # Correcting Kauffmann+ 2003 SDSS stellar masses
 logNO_median = raw[:, 1] * unyt.dimensionless  # log(N/O)
 logNO_lo = raw[:, 2] * unyt.dimensionless  # log(N/O)
 logNO_hi = raw[:, 3] * unyt.dimensionless  # log(N/O)
@@ -33,8 +33,8 @@ y_scatter = unyt.unyt_array((logNO_median - logNO_lo, logNO_hi - logNO_median))
 
 # Meta-data
 comment = (
-    "Data obtained assuming a Chabrier IMF and h=0.7. "
-    f"Stellar masses were h-corrected for SWIFT using cosmology: {cosmology.name}. "
+    "Data obtained assuming a Chabrier IMF. "
+    f"SDSS Stellar masses from Kauffmann et al. (2003) were h-corrected. "
     "The gas-phase nitrogen over oxygen abundance is expressed as log10(N/O). "
     "The error bars given the 16th and 84th percentile of the distribution."
 )
