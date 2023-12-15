@@ -28,7 +28,7 @@ name = "Galaxy Stellar Mass - Gas Metallicity"
 plot_as = "points"
 redshift = 0.7
 
-all_indicators = ['Ne3O2', 'O3HB', 'O3O2', 'R23']
+all_indicators = ["Ne3O2", "O3HB", "O3O2", "R23"]
 indicators, Mstar, Zgas, Zgas_std = [], [], [], []
 
 with open(input_filename, "r") as file:
@@ -37,7 +37,7 @@ with open(input_filename, "r") as file:
         if c > 2:
             m = float(row[1]) + 0.03 * (all_indicators.index(row[0]) - 1.5)
             indicators.append(row[0])
-            Mstar.append(10**m * (h_sim / h_obs) ** -2)
+            Mstar.append(10 ** m * (h_sim / h_obs) ** -2)
             Zgas.append(float(row[2]))
             Zgas_std.append(float(row[3]))
 
@@ -50,10 +50,7 @@ for indicator in all_indicators:
 
     mask = np.array(indicators) == indicator
     processed.associate_x(
-        Mstar[mask], 
-        scatter=None, 
-        comoving=False, 
-        description="Galaxy Stellar Mass"
+        Mstar[mask], scatter=None, comoving=False, description="Galaxy Stellar Mass"
     )
     processed.associate_y(
         Zgas[mask],
@@ -75,4 +72,3 @@ for indicator in all_indicators:
         os.remove(output_path)
 
     processed.write(filename=output_path)
-

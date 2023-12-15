@@ -45,10 +45,10 @@ for redshift in [2.3, 3.3]:
     y_scatter = unyt.unyt_array((metal_err_lo[mask], metal_err_hi[mask]))
 
     processed.associate_x(
-        Mstar[mask], 
-        scatter=x_scatter, 
-        comoving=False, 
-        description="Galaxy Stellar Mass"
+        Mstar[mask],
+        scatter=x_scatter,
+        comoving=False,
+        description="Galaxy Stellar Mass",
     )
     processed.associate_y(
         metal[mask],
@@ -69,4 +69,3 @@ for redshift in [2.3, 3.3]:
         os.remove(output_path)
 
     processed.write(filename=output_path)
-
