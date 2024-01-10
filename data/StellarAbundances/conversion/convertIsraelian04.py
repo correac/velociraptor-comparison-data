@@ -33,33 +33,32 @@ O_over_Fe_AG89 = O_over_H_AG89 - Fe_over_H_AG89
 N_over_Fe_AG89 = N_over_H_AG89 - Fe_over_H_AG89
 
 element_list = ["NFe", "OFe", "NO"]
-correction = np.array([N_over_Fe_AG89 - N_over_Fe,
-                       O_over_Fe_AG89 - O_over_Fe,
-                       N_over_O_AG89 - N_over_O])
-name_short = ["[N/Fe]","[O/Fe]","[N/O]"]
+correction = np.array(
+    [N_over_Fe_AG89 - N_over_Fe, O_over_Fe_AG89 - O_over_Fe, N_over_O_AG89 - N_over_O]
+)
+name_short = ["[N/Fe]", "[O/Fe]", "[N/O]"]
 
-data = np.loadtxt(input_filename, usecols=[0,1,3,5])
-select = np.where(data[:,3]!=0)[0]
+data = np.loadtxt(input_filename, usecols=[0, 1, 3, 5])
+select = np.where(data[:, 3] != 0)[0]
 
 for i, element in enumerate(element_list):
 
     FeH = data[select, 0] + Fe_over_H_AG89 - Fe_over_H
     XFe = data[select, i + 1] + correction[i]
-    if i<=1: XFe -= data[select, 0] # [N/Fe]
+    if i <= 1:
+        XFe -= data[select, 0]  # [N/Fe]
 
     x = unyt.unyt_array(FeH * unyt.dimensionless)
     y = unyt.unyt_array(XFe * unyt.dimensionless)
 
     ###########
     # Meta-data
-    output_filename = "Israelian_2004_"+element_list[i]+"_FeH.hdf5"
+    output_filename = "Israelian_2004_" + element_list[i] + "_FeH.hdf5"
 
-    comment = (
-        "Solar abundances are taken from Asplund et al. (2009)."
-    )
+    comment = "Solar abundances are taken from Asplund et al. (2009)."
     citation = "Israelian et al. (2004), MW"
     bibcode = "A&A 421, 649–658 (2004)"
-    name = name_short[i]+" as a function of [Fe/H]"
+    name = name_short[i] + " as a function of [Fe/H]"
     plot_as = "points"
     redshift = 0.0
 

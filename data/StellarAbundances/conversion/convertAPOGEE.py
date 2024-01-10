@@ -19,7 +19,9 @@ output_directory = "../"
 if not os.path.exists(output_directory):
     os.mkdir(output_directory)
 
-element_list = np.array(["C", "MG", "O", "N", "OH", "OHMGFE", "NO", "NOOH", "COOH", "CO"])
+element_list = np.array(
+    ["C", "MG", "O", "N", "OH", "OHMGFE", "NO", "NOOH", "COOH", "CO"]
+)
 
 # compute COLIBRE assumed abundances ( Asplund et al. 2009 )
 Fe_over_H = 7.5

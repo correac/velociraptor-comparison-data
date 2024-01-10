@@ -23,7 +23,9 @@ if not os.path.exists(output_directory):
 
 # Read the data
 raw = np.loadtxt(input_filename)
-M_star = 10 ** raw[:, 0] * unyt.Solar_Mass * (h_sim / h_obs) ** (-2) # Correcting Kauffmann+ 2003 SDSS stellar masses
+M_star = (
+    10 ** raw[:, 0] * unyt.Solar_Mass * (h_sim / h_obs) ** (-2)
+)  # Correcting Kauffmann+ 2003 SDSS stellar masses
 logNO_median = raw[:, 1] * unyt.dimensionless  # log(N/O)
 logNO_lo = raw[:, 2] * unyt.dimensionless  # log(N/O)
 logNO_hi = raw[:, 3] * unyt.dimensionless  # log(N/O)
