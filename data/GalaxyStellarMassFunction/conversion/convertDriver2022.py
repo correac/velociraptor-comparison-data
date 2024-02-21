@@ -13,7 +13,7 @@ with open(sys.argv[1], "r") as handle:
 h_obs = 0.7
 h_sim = cosmology.h
 
-output_filename = "Driver2021.hdf5"
+output_filename = "Driver2022.hdf5"
 output_directory = "../"
 
 if not os.path.exists(output_directory):
@@ -21,7 +21,7 @@ if not os.path.exists(output_directory):
 
 processed = ObservationalData()
 
-# Table 5
+# Table 6
 log10_Mstar = np.array(
     [
         6.875,
@@ -96,7 +96,7 @@ log10_Phi_delta = np.array(
 )
 
 # Add correction to z=0 and SDSS
-log10_Phi += 0.0769
+log10_Phi += 0.0807
 
 log10_Phi_plus = log10_Phi + log10_Phi_delta
 log10_Phi_minus = log10_Phi - log10_Phi_delta
@@ -116,8 +116,8 @@ comment = (
     f"h-corrected for SWIFT using cosmology: {cosmology.name}. "
     "Ignoring the mass bins for which GAMA is systematically incomplete."
 )
-citation = "Driver et al. (2021) (GAMA-DR4)"
-bibcode = "private communication"
+citation = "Driver et al. (2022) (GAMA-DR4)"
+bibcode = "2022MNRAS.513..439D"
 name = "GSMF from GAMA-DR4"
 redshift = 0.0
 plot_as = "points"
