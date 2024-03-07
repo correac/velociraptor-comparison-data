@@ -1,0 +1,16 @@
+# Data extracted from X-ray observations Annana et al. (2020ApJ...903...85A).
+#
+# Cosmology assumes h = 0.7
+#
+# Units of bolometric luminosity density are erg * s^-1 * Mpc^-3
+# z     log10(BLD)
+0.022      40.79
+0.265      41.37
+0.538      41.65
+0.806      41.81
+1.313      41.96
+1.864      42.04
+2.907      41.84
+3.826      41.43
+4.378      41.16
+5.003      40.86

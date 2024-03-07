@@ -1,0 +1,8 @@
+# Binned median galaxy stellar masses and black hole masses from Graham & Sahu (2023) (2023MNRAS.518.2177G).
+# The BH masses for different morphological types are weighted by using fractions of those morphological
+# types as a function of stellar mass from Moffet et al. (2016) (2016MNRAS.462.4336M).
+# log10(M_star) log10(M_star_16) log10(M_star_84) log10(M_BH/M_star) log10(M_BH/M_star)_16 log10(M_BH/M_star)_84
+10.320 10.141 10.503 -3.590 -4.340 -2.346
+10.860 10.690 11.030 -3.066 -3.930 -2.204
+11.375 11.173 11.510 -2.696 -3.466 -2.202
+11.740 11.606 11.932 -2.420 -3.279 -2.013

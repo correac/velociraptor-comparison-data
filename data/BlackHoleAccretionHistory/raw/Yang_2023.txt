@@ -1,0 +1,12 @@
+# Data extracted from JWST infrared observations by Yang et al. (2023)
+# 2023ApJ...950L...5Y
+#
+# Cosmology assumes h = 0.7
+#
+# Units of accretion rate density are Msun * yr^-1 * Mpc^-3
+# z   z_low  z_high  log10(BHARD) log10(BHARD_low) log10(BHARD_high)
+0.44   0.0   1.2      -5.105          -5.440            -4.892
+1.48   1.2   2.2      -4.090          -4.480            -3.890
+2.50   2.2   3.0      -4.280          -4.715            -4.090
+3.62   3.0   4.0      -4.140          -4.330            -4.000
+4.25   4.0   5.0      -4.440          -4.630            -4.300

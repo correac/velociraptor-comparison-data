@@ -1,0 +1,20 @@
+# Data extracted from mixed-wavelength (UV to IR) observations by D'Silva et
+# al. (2023MNRAS.524.1448D).
+#
+# Cosmology assumes h = 0.7
+#
+# Units of bolometric luminosity density are erg * s^-1 * Mpc^-3
+# z     log10(BLD) log10(BLD_low) log10(BLD_high)
+0.05      40.71        40.65          40.79
+0.12      40.90        40.85          40.96
+0.20      41.05        40.99          41.12
+0.29      41.23        41.16          41.31
+0.40      41.36        41.26          41.48
+0.53      41.39        41.31          41.51
+0.70      41.40        41.29          41.63
+0.89      41.46        41.39          41.54
+1.13      41.48        41.39          41.59
+1.50      41.58        41.50          41.67
+1.94      41.66        41.58          41.79
+2.66      41.47        41.37          41.56
+4.20      41.07        41.00          41.16

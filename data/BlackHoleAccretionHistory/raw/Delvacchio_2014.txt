@@ -1,0 +1,13 @@
+# Data extracted from Herschel infrared observations by Delvacchio et al.
+# (2014) (2014MNRAS.439.2736D).
+#
+# Cosmology assumes h = 0.71
+#
+# Units of accretion rate density are Msun * yr^-1 * Mpc^-3
+# z   z_low  z_high  log10(BHARD) log10(BHARD_low) log10(BHARD_high)
+0.21   0.1   0.3      -5.085          -5.334            -5.025
+0.53   0.3   0.7      -4.646          -4.670            -4.560
+0.95   0.7   1.2      -4.478          -4.506            -4.432
+1.47   1.2   1.8      -4.332          -4.510            -4.186
+2.02   1.8   2.5      -4.140          -4.340            -3.980
+2.76   2.5   3.8      -4.428          -4.657            -4.229

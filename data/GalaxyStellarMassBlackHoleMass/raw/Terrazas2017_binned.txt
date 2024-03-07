@@ -1,0 +1,7 @@
+# Binned median galaxy stellar masses and black hole masses from Terrazas et al. (2017) (2017ApJ...844..170T).
+# The BH masses for active and passive galaxies are weighted by using passive fractions
+# as a function of stellar mass from Gilbank et al. (2010) (2010MNRAS.405.2594G).
+# log10(M_star) log10(M_star_16) log10(M_star_84) log10(M_BH/M_star) log10(M_BH/M_star)_16 log10(M_BH/M_star)_84
+10.764 10.661 10.838 -3.140 -3.932 -1.859
+11.097 10.935 11.241 -2.753 -4.052 -1.851
+11.463 11.344 11.643 -2.453 -3.476 -1.717
