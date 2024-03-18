@@ -17,7 +17,7 @@ input_filename = f"../raw/Pharo2023.csv"
 
 comment = (
     "The relationship between stellar mass and gas-phase metallicity "
-    "at 0.3<z<85 from the HALO7D survey. "
+    "at 0.3<z<0.85 from the HALO7D survey. "
     "Uses Kroupa initial mass function and h=0.7. "
     f"h-corrected for SWIFT using cosmology: {cosmology.name}. "
     "The metallicity is calculated using 4 different methods. "
@@ -34,6 +34,7 @@ indicators, Mstar, Zgas, Zgas_std = [], [], [], []
 with open(input_filename, "r") as file:
     data = csv.reader(file, delimiter=",")
     for c, row in enumerate(data):
+        # Skip header
         if c > 2:
             m = float(row[1]) + 0.03 * (all_indicators.index(row[0]) - 1.5)
             indicators.append(row[0])

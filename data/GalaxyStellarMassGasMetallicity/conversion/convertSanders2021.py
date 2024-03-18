@@ -63,7 +63,7 @@ for redshift in [2.3, 3.3]:
     processed.associate_plot_as(plot_as)
     processed.associate_cosmology(cosmology)
 
-    output_path = f"../Sanders2021_z{redshift}.hdf5"
+    output_path = f"../Sanders2021_z{redshift:.1f}.hdf5"
 
     if os.path.exists(output_path):
         os.remove(output_path)
