@@ -36,7 +36,10 @@ with open(input_filename, "r") as file:
     for c, row in enumerate(data):
         # Skip header
         if c > 2:
-            m = float(row[1]) + 0.03 * (all_indicators.index(row[0]) - 1.5)
+            m = float(row[1])
+            # Add a stellar mass offset so datapoints from different
+            # methods are not plotted atop each other
+            m += 0.03 * (all_indicators.index(row[0]) - 1.5)
             indicators.append(row[0])
             Mstar.append(10 ** m * (h_sim / h_obs) ** -2)
             Zgas.append(float(row[2]))
