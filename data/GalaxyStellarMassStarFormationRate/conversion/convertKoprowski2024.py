@@ -31,6 +31,7 @@ for star_forming in [0, 1]:
     multi_z.associate_name(name)
     multi_z.associate_comment(comment)
     multi_z.associate_cosmology(cosmology)
+    multi_z.associate_maximum_number_of_returns(1)
     for i, (zmin, zmax) in enumerate(
         [
             (0.25, 0.75),
@@ -45,9 +46,11 @@ for star_forming in [0, 1]:
     ):
         zmean = 0.5 * (zmin + zmax)
         # Select all or star-forming galaxies
-        mask = raw[:, 0] == star_forming
+        star_forming_mask = raw[:, 0] == star_forming
         # Select mass ranges with data at this redshift
-        mask &= raw[:, 3 + 2 * i] != 0
+        mass_mask = raw[:, 3 + 2 * i] != 0
+        # Combine masks
+        mask = star_forming_mask & mass_mask
 
         M = 10 ** ((raw[:, 1] + raw[:, 2]) / 2) * unyt.solar_mass
         sfr = 10 ** raw[:, 3 + 2 * i] * unyt.solar_mass / unyt.year
@@ -73,7 +76,7 @@ for star_forming in [0, 1]:
             comoving=True,
             description="Star Formation Rate",
         )
-        processed.associate_redshift(zmean)
+        processed.associate_redshift(zmean, zmin, zmax)
         processed.associate_plot_as(plot_as)
 
         multi_z.associate_dataset(processed)
