@@ -16,7 +16,7 @@ with open(sys.argv[1], "r") as handle:
 h_sim = cosmology.h
 h_obs = 0.7
 
-input_filename = "../raw/Lyu23.txt"
+input_filename = "../raw/Lyu2023.txt"
 
 output_filename = "Lyu2023.hdf5"
 output_directory = "../"

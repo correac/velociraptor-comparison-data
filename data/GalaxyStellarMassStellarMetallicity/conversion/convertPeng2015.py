@@ -15,7 +15,7 @@ with open(sys.argv[1], "r") as handle:
 # Cosmology
 h_sim = cosmology.h
 
-input_filename = "../raw/Peng15.txt"
+input_filename = "../raw/Peng2015.txt"
 
 output_filename = "Peng2015.hdf5"
 output_directory = "../"
