@@ -19,7 +19,9 @@ if not os.path.exists(output_directory):
     os.mkdir(output_directory)
 
 element_list = np.array(
-    ["MGHOMG","MGHCNMG", "MGHOH", "MG", "O", "CN"]
+    ["ASPCAP_MGHOMG","BAWLAS_MGHOMG","ASPCAP_MGHCNMG","BAWLAS_MGHCNMG",
+     "ASPCAP_MGHOH","BAWLAS_MGHOH","ASPCAP_OMG","BAWLAS_OMG",
+     "ASPCAP_MGFEOH","BAWLAS_MGFEOH","ASPCAP_MGFE","ASPCAP_SIFE"]
 )
 
 # compute COLIBRE assumed abundances ( Asplund et al. 2009 )
@@ -28,7 +30,7 @@ Mg_over_H_AS09 = 7.6
 O_over_H_AS09 = 8.69
 C_over_H_AS09 = 8.43
 N_over_H_AS09 = 7.83
-#Si_over_H = to-do
+Si_over_H_AS09 = 7.51
 
 Mg_over_Fe_AS09 = Mg_over_H_AS09 - Fe_over_H_AS09
 O_over_Fe_AS09 = O_over_H_AS09 - Fe_over_H_AS09
@@ -38,7 +40,7 @@ O_over_H_AS09 = O_over_H_AS09
 N_over_O_AS09 = N_over_H_AS09 - O_over_H_AS09
 C_over_O_AS09 = C_over_H_AS09 - O_over_H_AS09
 O_over_Mg_AS09 = O_over_H_AS09 - Mg_over_H_AS09
-#Si_over_Fe_AS09 = to-do
+Si_over_Fe_AS09 = Si_over_H_AS09 - Fe_over_H_AS09
 
 # tabulate/compute the same ratios from Grevesse, Asplund & Sauval (2007)
 Fe_over_H_GA07 = 7.45
@@ -46,7 +48,7 @@ Mg_over_H_GA07 = 7.53
 O_over_H_GA07 = 8.66
 C_over_H_GA07 = 8.39
 N_over_H_GA07 = 7.78
-#Si_over_H_GA07 = to-do
+Si_over_H_GA07 = 7.51
 
 Mg_over_Fe_GA07 = Mg_over_H_GA07 - Fe_over_H_GA07
 O_over_Fe_GA07 = O_over_H_GA07 - Fe_over_H_GA07
@@ -55,56 +57,99 @@ N_over_Fe_GA07 = N_over_H_GA07 - Fe_over_H_GA07
 N_over_O_GA07 = N_over_H_GA07 - O_over_H_GA07
 C_over_O_GA07 = C_over_H_GA07 - O_over_H_GA07
 O_over_Mg_GA07 = O_over_H_GA07 - Mg_over_H_GA07
+Si_over_Fe_GA07 = Si_over_H_GA07 - Fe_over_H_GA07
 
 for element in element_list:
 
-    output_filename = "2process_APOGEE_data_{0}.hdf5".format(element)
+    output_filename = "2process_APOGEE_{0}.hdf5".format(element)
 
     if "MGH" in element:
         MG_H = apogee_dataset["MG_H_ASPCAP_corrected"][:]
         x = MG_H + Mg_over_H_GA07 - Mg_over_H_AS09
         xlabel = "[Mg/H]"
-        if element == "MGHOMG":
+
+        if element == "ASPCAP_MGHOMG":
             O_H = apogee_dataset["O_H_ASPCAP_corrected"][:]
             MG_H = apogee_dataset["MG_H_ASPCAP_corrected"][:]
             y = O_H - MG_H + O_over_Mg_GA07 - O_over_Mg_AS09
             name = "[O/Mg] as a function of [Mg/H]".format(element)
             ylabel = "[O/Mg]"
-        elif element == "MGHCNMG":
+        elif element == "ASPCAP_MGHCNMG":
             CN_H = apogee_dataset["CN_H_ASPCAP_corrected"][:]
             MG_H = apogee_dataset["MG_H_ASPCAP_corrected"][:]
             y = CN_H - MG_H
             name = "[(C+N)/Mg] as a function of [Mg/H]".format(element)
             ylabel = "[(C+N)/Mg]"
-        elif element == "MGHOH":
+        elif element == "ASPCAP_MGHOH":
             O_H = apogee_dataset["O_H_ASPCAP_corrected"][:]
             y = O_H + O_over_H_GA07 - O_over_H_AS09
             name = "[O/H] as a function of [Mg/H]".format(element)
             ylabel = "[O/H]"
 
-    else:  # O, MG, N, or C
-        FE_H_corrected = apogee_dataset["FE_H_ASPCAP_corrected"][:]
-        # FE_H_raw = apogee_dataset["FE_H_ASPCAP_raw"][:]
-        x = FE_H_corrected + Fe_over_H_GA07 - Fe_over_H_AS09
-        xlabel = "[Fe/H]"
-        if element == "O":
+        elif element == "BAWLAS_MGHOMG":
+            O_H = apogee_dataset["O_H_BAWLAS_corrected"][:]
+            MG_H = apogee_dataset["MG_H_ASPCAP_corrected"][:]
+            y = O_H - MG_H + O_over_Mg_GA07 - O_over_Mg_AS09
+            name = "[O/Mg] as a function of [Mg/H]".format(element)
+            ylabel = "[O/Mg]"
+        elif element == "BAWLAS_MGHCNMG":
+            CN_H = apogee_dataset["CN_H_BAWLAS_corrected"][:]
+            MG_H = apogee_dataset["MG_H_ASPCAP_corrected"][:]
+            y = CN_H - MG_H
+            name = "[(C+N)/Mg] as a function of [Mg/H]".format(element)
+            ylabel = "[(C+N)/Mg]"
+        elif element == "BAWLAS_MGHOH":
+            O_H = apogee_dataset["O_H_BAWLAS_corrected"][:]
+            y = O_H + O_over_H_GA07 - O_over_H_AS09
+            name = "[O/H] as a function of [Mg/H]".format(element)
+            ylabel = "[O/H]"
+
+    elif "MGFEOH" in element:
+        if element == "ASPCAP_MGFEOH":
             O_H = apogee_dataset["O_H_ASPCAP_corrected"][:]
-            FE_H = apogee_dataset["FE_H_ASPCAP_corrected"][:]
-            y = O_H - FE_H + O_over_Fe_GA07 - O_over_Fe_AS09
-            name = "[O/Fe] as a function of [Fe/H]".format(element)
-            ylabel = "[O/Fe]".format(element)
-        if element == "MG":
+        elif element == "BAWLAS_MGFEOH":
+            O_H = apogee_dataset["O_H_BAWLAS_corrected"][:]
+
+        x = O_H + O_over_H_GA07 - O_over_H_AS09
+        MG_H = apogee_dataset["MG_H_ASPCAP_corrected"][:]
+        FE_H = apogee_dataset["FE_H_ASPCAP_corrected"][:]
+        correction = Mg_over_H_GA07 - Mg_over_H_AS09 - (Fe_over_H_GA07 - Fe_over_H_AS09)
+        y = MG_H - FE_H + correction
+        xlabel = "[O/H]"
+        ylabel = "[Mg/Fe]"
+        name = "[Mg/Fe] as a function of [O/H]".format(element)
+
+    else:  # Other ..
+        FE_H = apogee_dataset["FE_H_ASPCAP_corrected"][:]
+        x = FE_H + Fe_over_H_GA07 - Fe_over_H_AS09
+        xlabel = "[Fe/H]"
+        if element == "ASPCAP_OMG":
+            O_H = apogee_dataset["O_H_ASPCAP_corrected"][:]
+            MG_H = apogee_dataset["MG_H_ASPCAP_corrected"][:]
+            y = O_H - MG_H + O_over_Mg_GA07 - O_over_Mg_AS09
+            name = "[O/Mg] as a function of [Fe/H]".format(element)
+            ylabel = "[O/Mg]".format(element)
+        if element == "BAWLAS_OMG":
+            O_H = apogee_dataset["O_H_BAWLAS_corrected"][:]
+            MG_H = apogee_dataset["MG_H_ASPCAP_corrected"][:]
+            y = O_H - MG_H + O_over_Mg_GA07 - O_over_Mg_AS09
+            name = "[O/Mg] as a function of [Fe/H]".format(element)
+            ylabel = "[O/Mg]".format(element)
+        if element == "ASPCAP_MGFE":
             MG_H = apogee_dataset["MG_H_ASPCAP_corrected"][:]
             FE_H = apogee_dataset["FE_H_ASPCAP_corrected"][:]
-            y = MG_H - FE_H + Mg_over_Fe_GA07 - Mg_over_Fe_AS09
+            correction = Mg_over_H_GA07 - Mg_over_H_AS09 - (Fe_over_H_GA07 - Fe_over_H_AS09)
+            y = MG_H - FE_H + correction
+            ylabel = "[Mg/Fe]"
             name = "[Mg/Fe] as a function of [Fe/H]".format(element)
-            ylabel = "[Mg/Fe]".format(element)
-        if element == "CN":
-            CN_H = apogee_dataset["CN_H_ASPCAP_corrected"][:]
+        if element == "ASPCAP_SIFE":
+            SI_H = apogee_dataset["SI_H_ASPCAP_corrected"][:]
             FE_H = apogee_dataset["FE_H_ASPCAP_corrected"][:]
-            y = CN_H - FE_H
-            name = "[(C+N)/Fe] as a function of [Fe/H]".format(element)
-            ylabel = "[(C+N)/Fe]".format(element)
+            correction = Si_over_H_GA07 - Si_over_H_AS09 - (Fe_over_H_GA07 - Fe_over_H_AS09)
+            y = SI_H - FE_H + correction
+            ylabel = "[Si/Fe]"
+            name = "[Si/Fe] as a function of [Fe/H]".format(element)
+
 
     x = unyt.unyt_array(x * unyt.dimensionless)
     y = unyt.unyt_array(y * unyt.dimensionless)
