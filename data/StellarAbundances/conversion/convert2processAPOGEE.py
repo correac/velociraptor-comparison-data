@@ -19,9 +19,20 @@ if not os.path.exists(output_directory):
     os.mkdir(output_directory)
 
 element_list = np.array(
-    ["ASPCAP_MGHOMG","BAWLAS_MGHOMG","ASPCAP_MGHCNMG","BAWLAS_MGHCNMG",
-     "ASPCAP_MGHOH","BAWLAS_MGHOH","ASPCAP_OMG","BAWLAS_OMG",
-     "ASPCAP_MGFEOH","BAWLAS_MGFEOH","ASPCAP_MGFE","ASPCAP_SIFE"]
+    [
+        "ASPCAP_MGHOMG",
+        "BAWLAS_MGHOMG",
+        "ASPCAP_MGHCNMG",
+        "BAWLAS_MGHCNMG",
+        "ASPCAP_MGHOH",
+        "BAWLAS_MGHOH",
+        "ASPCAP_OMG",
+        "BAWLAS_OMG",
+        "ASPCAP_MGFEOH",
+        "BAWLAS_MGFEOH",
+        "ASPCAP_MGFE",
+        "ASPCAP_SIFE",
+    ]
 )
 
 # compute COLIBRE assumed abundances ( Asplund et al. 2009 )
@@ -138,18 +149,21 @@ for element in element_list:
         if element == "ASPCAP_MGFE":
             MG_H = apogee_dataset["MG_H_ASPCAP_corrected"][:]
             FE_H = apogee_dataset["FE_H_ASPCAP_corrected"][:]
-            correction = Mg_over_H_GA07 - Mg_over_H_AS09 - (Fe_over_H_GA07 - Fe_over_H_AS09)
+            correction = (
+                Mg_over_H_GA07 - Mg_over_H_AS09 - (Fe_over_H_GA07 - Fe_over_H_AS09)
+            )
             y = MG_H - FE_H + correction
             ylabel = "[Mg/Fe]"
             name = "[Mg/Fe] as a function of [Fe/H]".format(element)
         if element == "ASPCAP_SIFE":
             SI_H = apogee_dataset["SI_H_ASPCAP_corrected"][:]
             FE_H = apogee_dataset["FE_H_ASPCAP_corrected"][:]
-            correction = Si_over_H_GA07 - Si_over_H_AS09 - (Fe_over_H_GA07 - Fe_over_H_AS09)
+            correction = (
+                Si_over_H_GA07 - Si_over_H_AS09 - (Fe_over_H_GA07 - Fe_over_H_AS09)
+            )
             y = SI_H - FE_H + correction
             ylabel = "[Si/Fe]"
             name = "[Si/Fe] as a function of [Fe/H]".format(element)
-
 
     x = unyt.unyt_array(x * unyt.dimensionless)
     y = unyt.unyt_array(y * unyt.dimensionless)

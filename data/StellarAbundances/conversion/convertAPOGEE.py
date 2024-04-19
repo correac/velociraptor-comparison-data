@@ -20,7 +20,7 @@ if not os.path.exists(output_directory):
     os.mkdir(output_directory)
 
 element_list = np.array(
-    ["C", "MG", "O", "N", "OH", "OHMG","OMGFE", "NO", "NOOH", "COOH", "CO"]
+    ["C", "MG", "O", "N", "OH", "OHMG", "OMGFE", "NO", "NOOH", "COOH", "CO"]
 )
 
 # compute COLIBRE assumed abundances ( Asplund et al. 2009 )
@@ -106,7 +106,9 @@ for element in element_list:
         xlabel = "[Fe/H]"
         MG_FE = apogee_dataset["MG_FE"][:]
         O_FE = apogee_dataset["O_FE"][:]
-        correction = O_over_Fe_GA07 - O_over_Fe_AS09 - (Mg_over_Fe_GA07 - Mg_over_Fe_AS09)
+        correction = (
+            O_over_Fe_GA07 - O_over_Fe_AS09 - (Mg_over_Fe_GA07 - Mg_over_Fe_AS09)
+        )
         y = O_FE - MG_FE + correction
         name = "[O/Mg] as a function of [Fe/H]".format(element)
         ylabel = "[O/Mg]"
